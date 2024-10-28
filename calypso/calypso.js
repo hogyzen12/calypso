@@ -25,7 +25,7 @@ const TOKEN_IDS = {
 };
 
 const RPC_ENDPOINT = process.env.RPC_ENDPOINT || "https://mainnet.helius-rpc.com/?api-key=2c0388dc-a082-4cc5-bad9-29437f3c0715";
-const KEYPAIR_PATH = process.env.KEYPAIR_PATH || "4Cbjzus4yN733FaSDsjC63QmymwWztPCHHcJ7nVeaf2z.json";
+const KEYPAIR_PATH = process.env.KEYPAIR_PATH || "calypso.json";
 const REBALANCE_THRESHOLD = new Decimal(process.env.REBALANCE_THRESHOLD || '0.0042');
 const CHECK_INTERVAL = parseInt(process.env.CHECK_INTERVAL, 10) || 60;
 
