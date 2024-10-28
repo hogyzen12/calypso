@@ -44,10 +44,6 @@ function log(message) {
     console.log(`[${new Date().toISOString()}] ${message}`);
 }
 
-function getWalletAddressFromKeypairPath(keypairPath) {
-    return path.basename(keypairPath, path.extname(keypairPath));
-}
-
 function printTrades(trades) {
     log("\nExecuting the following trades:");
     log("-".repeat(70));
@@ -585,14 +581,14 @@ async function createRebalanceTransactions(rebalanceAmounts, prices, fromAccount
 }
 
 async function rebalancePortfolio() {
-    const walletAddress = getWalletAddressFromKeypairPath(KEYPAIR_PATH);
+    const keypairData = await fs.readFile(KEYPAIR_PATH, { encoding: 'utf8' });
+    const secretKey = Uint8Array.from(JSON.parse(keypairData));
+    const fromAccount = web3.Keypair.fromSecretKey(secretKey);
+    // Get the public key as a string
+    const walletAddress = fromAccount.publicKey.toString();
     log(`Wallet address: ${walletAddress}`);
 
     try {
-        const keypairData = await fs.readFile(KEYPAIR_PATH, { encoding: 'utf8' });
-        const secretKey = Uint8Array.from(JSON.parse(keypairData));
-        const fromAccount = web3.Keypair.fromSecretKey(secretKey);
-
         while (true) {
             try {
                 log("\n--- Starting portfolio check ---");
